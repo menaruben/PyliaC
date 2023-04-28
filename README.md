@@ -36,12 +36,9 @@ Now you can create a PyliaC instance inside your python code and start using the
 ```python
 from pyliac import PyliaC
 
-MyLib = PyliaC("~/Downloads/julia-1.8.3/bin/julia", # path to your julia interpreter
-                "./test.jl",                        # path to your julia program
-                "testlib.c"                         # path for the c code that will get compiled
-                )
+juliaFile = PyliaC("./test.jl")
 
-MyLib.lib.dotp(b"2 3 4 5")                          # output: 23.0
+juliaFile.dotp(b"2 3 4 5")          # output: 23.0
 ```
 
 You will need to convert your arguments into bytes because the C code that gets generated when creating a new PyliaC`instance looks like this:

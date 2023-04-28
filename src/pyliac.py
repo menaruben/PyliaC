@@ -1,16 +1,14 @@
 import ctypes
 from subprocess import check_output
-from os import system
 
 class PyliaC:
     """
     PyliaC is an interface between Python and Julia written in C
     """
-    def __init__(self, julia_file: str, julia_interpreter: str = "julia", c_path: str = "./pyliac") -> None:
+    def __init__(self, julia_file: str, julia_interpreter: str = "julia") -> None:
         self.julia_file = julia_file
         self.julia_interpreter = julia_interpreter
-        system(f"gcc -fPIC -shared -o {c_path}.so {c_path}.c")
-        self.clib = ctypes.CDLL(f"{c_path}.so")
+        self.clib = ctypes.CDLL("./pyliac.so")
         self.functions = self.get_functions()
         self.declare_funcs()
 
