@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct Julia {
+    char* file_path;
+    char** functions;
+};
+
 char* get_content(char* path) {
 
     FILE* file_ptr;
@@ -68,12 +73,18 @@ char** get_functions(char* file_path) {
     return functions;
 }
 
-// int main() {
-//     char** functions = get_functions("./test.jl");
-//     for (int i = 0; functions[i] != NULL; i++) {
-//         printf("%s\n", functions[i]);
-//     }
+// Define a custom constructor for the Julia struct
+struct Julia* Julia_init(char* file_path) {
+    struct Julia* julia = malloc(sizeof(struct Julia));
+    julia->file_path = file_path;
+    julia->functions = get_functions(file_path);
+    return julia;
+}
 
-//     free(functions);
-//     return 0;
-// }
+// call function
+void call(char* julia_interpreter, char* function_name, char* args) {
+
+    char cmd[1024];
+    sprintf(cmd, "%s ./test.jl %s %s", julia_interpreter, function_name, args);
+    system(cmd);
+}

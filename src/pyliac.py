@@ -1,50 +1,31 @@
+import os
 import ctypes
-from subprocess import check_output
+
+path = os.getcwd()
+clib = ctypes.CDLL(os.path.join(path, "pyliac.so"))
 
 class PyliaC:
-    """
-    PyliaC is an interface between Python and Julia written in C
-    """
-    def __init__(self, julia_file: str, julia_interpreter: str = "julia") -> None:
-        self.julia_file = julia_file
+    def __init__(self, file_path: str, julia_interpreter: str = "julia") -> None:
+        self.file_path = file_path
         self.julia_interpreter = julia_interpreter
-        self.clib = ctypes.CDLL("./pyliac.so")
-        self.functions = self.get_functions()
-        self.declare_funcs()
+        self.functions = Julia().get_function_list(bytes(file_path, "utf-8"))
 
-    def get_functions(self):
-        """
-        parses out functions from the julia file
-        """
-        self.clib.get_functions.restype = ctypes.POINTER(ctypes.c_char_p)
-        cstring_pointer = self.clib.get_functions(b'./test.jl')
+    def call_func(self, function_name: bytes, args: bytes):
+        clib.call(bytes(self.julia_interpreter, "utf-8"), function_name, args)
 
-        # get the array size by counting null-terminated strings
-        array_size = 0
-        while cstring_pointer[array_size]:
-            array_size += 1
+class Julia(ctypes.Structure):
+    _fields_ = [
+                ("file_path", ctypes.c_char_p),
+                ("functions", ctypes.POINTER(ctypes.c_char_p))]
 
-        # create a Python list and copy each string from the array
+    def get_function_list(self, file_path: bytes) -> list:
+        clib.Julia_init.restype = ctypes.POINTER(Julia)
+        julia_file = clib.Julia_init(file_path)
+
         function_list = []
-        for i in range(array_size):
-            function_string = cstring_pointer[i].decode("utf-8")
-            function_name = function_string.split("(")
-            function_list.append(function_name[0])
+        func = julia_file.contents.functions[0]
+        while func is not None:
+            function_list.append((func.decode().split("("))[0])
+            func = julia_file.contents.functions[len(function_list)]
 
         return function_list
-
-    def declare_funcs(self):
-        """
-        automatically declares functions according to self.functions
-        """
-        for function_name in self.functions:
-            def func(self, args: list, fname=function_name):
-                args_list = [str(num) for num in args]
-
-                cmd = ([self.julia_interpreter, self.julia_file, fname] + args_list)
-                output_str = check_output(cmd)
-
-                output = output_str.strip().decode("utf-8")
-                return output
-
-            setattr(PyliaC, function_name.replace('-', '_'), func)

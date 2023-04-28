@@ -36,7 +36,6 @@ Now you can create a PyliaC instance inside your python code and start using the
 ```python
 from pyliac import PyliaC
 
-juliaFile = PyliaC("./test.jl")
-
-print(juliaFile.dotp([2, 3, 4, 5]))          # output: 23.0
+julia_file = PyliaC("./test.jl")
+julia_file.call_func(b"dotp", b"1 2 3 4 5 6")          # output: 32.0
 ```
