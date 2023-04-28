@@ -18,4 +18,4 @@ def get_average_runtime(num_of_tests: int, byte_args: bytes) -> float:
     return runtime_sum/num_of_tests
 
 b_args = b"2 3 4 5"
-print(f"The average runtime for the dotp function was: {get_average_runtime(10, bargs)} seconds")
+print(f"The average runtime for the dotp function was: {get_average_runtime(10, b_args)} seconds")

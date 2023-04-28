@@ -5,7 +5,7 @@
 int add(char* args) {
 
     char cmd[1024];
-    sprintf(cmd, "~/Downloads/julia-1.8.3/bin/julia ./test.jl add %s", args);
+    sprintf(cmd, "C:/Users/ruben/AppData/Local/Programs/Julia-1.8.3/bin/julia.exe ./test.jl add %s", args);
     system(cmd);
     return 0;
 }
@@ -14,7 +14,7 @@ int add(char* args) {
 int multiply(char* args) {
 
     char cmd[1024];
-    sprintf(cmd, "~/Downloads/julia-1.8.3/bin/julia ./test.jl multiply %s", args);
+    sprintf(cmd, "C:/Users/ruben/AppData/Local/Programs/Julia-1.8.3/bin/julia.exe ./test.jl multiply %s", args);
     system(cmd);
     return 0;
 }
@@ -23,7 +23,7 @@ int multiply(char* args) {
 int greet(char* args) {
 
     char cmd[1024];
-    sprintf(cmd, "~/Downloads/julia-1.8.3/bin/julia ./test.jl greet %s", args);
+    sprintf(cmd, "C:/Users/ruben/AppData/Local/Programs/Julia-1.8.3/bin/julia.exe ./test.jl greet %s", args);
     system(cmd);
     return 0;
 }
@@ -32,7 +32,7 @@ int greet(char* args) {
 int dotp(char* args) {
 
     char cmd[1024];
-    sprintf(cmd, "~/Downloads/julia-1.8.3/bin/julia ./test.jl dotp %s", args);
+    sprintf(cmd, "C:/Users/ruben/AppData/Local/Programs/Julia-1.8.3/bin/julia.exe ./test.jl dotp %s", args);
     system(cmd);
     return 0;
 }
