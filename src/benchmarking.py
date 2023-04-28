@@ -1,13 +1,13 @@
 from pyliac import PyliaC
 import time
 
-MyLib = PyliaC("~/Downloads/julia-1.8.3/bin/julia", "./test.jl", "testlib.c")
+juliaFile = PyliaC("./test.jl")
 
 def get_average_runtime(num_of_tests: int, byte_args: bytes) -> float:
     runtimes = []
     for _ in range(num_of_tests):
         start_time = time.time()
-        MyLib.lib.dotp(byte_args)
+        juliaFile.dotp([22, 37, 46, 54, 66, 235])
         end_time = time.time()
         runtimes.append(end_time - start_time)
 
