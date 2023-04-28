@@ -28,3 +28,12 @@ int greet(char* args) {
     return 0;
 }
 
+
+int dotp(char* args) {
+
+    char cmd[1024];
+    sprintf(cmd, "~/Downloads/julia-1.8.3/bin/julia ./test.jl dotp %s", args);
+    system(cmd);
+    return 0;
+}
+

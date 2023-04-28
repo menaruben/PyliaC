@@ -46,6 +46,3 @@ int {func}(char* args) {{
 
     def compile_c_to_so(self) -> None:
         system(f"gcc -fPIC -shared -o {self.c_so_path} {self.c_path}")
-
-MyLib = PyliaC("~/Downloads/julia-1.8.3/bin/julia", "./test.jl", "testlib.c")
-MyLib.lib.greet(b"rubi")
