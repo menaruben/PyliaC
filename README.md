@@ -1,7 +1,7 @@
 # PyliaC
 PyliaC - an interface that opens the possibility to run your julia commands inside your python code.
 
-# Example
+## Example
 The PyliaC is very similar to [Pylia](https://github.com/WoodyXP/Pylia). The difference is that it is not python that calls the functions but C. You will also need to use the [Fire](https://juliapackages.com/p/fire) in Julia in order to run it like a cli application. Here is an example on how you can build your julia file with the Fire package:
 ```julia
 using Fire
@@ -37,5 +37,14 @@ Now you can create a PyliaC instance inside your python code and start using the
 from pyliac import PyliaC
 
 julia_file = PyliaC("./test.jl")
-julia_file.call_func(b"dotp", b"1 2 3 4 5 6")          # output: 32.0
+julia_file.call_func(b"dotp", b"1 2 3 4 5 6")   # output: 32.0
+```
+
+## future plans / improvements
+I'm currently working on optimizing the code (while moving as much as possible to C instead of python) and making "quality of life" (QOL) changes. The future syntax is planned to look like the following code snippets:
+```python
+from pyliac import PyliaC
+
+julia_file = PyliaC("./test.jl")
+julia_file.dotp([1, 2, 3, 4, 5, 6])             # output: 32.0
 ```
