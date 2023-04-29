@@ -25,7 +25,7 @@ class Julia(ctypes.Structure):
         function_list = []
         func = julia_file.contents.functions[0]
         while func is not None:
-            function_list.append((func.decode().split("("))[0])
+            function_list.append(func.decode())
             func = julia_file.contents.functions[len(function_list)]
 
         return function_list

@@ -42,6 +42,14 @@ _Bool starts_with(const char *pre, const char *str) {
     return strncmp(pre, str, strlen(pre)) == 0;
 }
 
+// void split_at(char* string, char* separator) {
+//     char* piece = strtok(string, separator);
+//     while (piece != NULL) {
+//         printf("%s\n", piece);
+//         piece = strtok(NULL, separator);
+//     }
+// }
+
 char** get_functions(char* file_path) {
 
     // make copy of file content string (strtok modifies the input string)
@@ -57,11 +65,20 @@ char** get_functions(char* file_path) {
         if (starts_with("@main function ", lines)) {
             // skip "@main function" prefix
             char* function_name = lines + strlen("@main function ");
-            char* end = function_name + strlen(function_name) - 1;
 
-            // add function name to list
-            functions[i] = function_name;
-            i++;
+            // extract function name
+            char* open_paren = strchr(function_name, '('); // get first occurence
+            if (open_paren != NULL) {
+                // allocate buffer for function name
+                int name_len = open_paren - function_name;
+                char* func_name = malloc((name_len + 1) * sizeof(char));
+                strncpy(func_name, function_name, name_len);
+                func_name[name_len] = '\0';
+
+                // add function name to list
+                functions[i] = func_name;
+                i++;
+            }
         }
 
         // get the next line
